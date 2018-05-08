@@ -1,0 +1,110 @@
+﻿@model StudentsTechFeeEvalApp.Models.Model_Classes.Request
+@{
+    ViewBag.Title = "Review Request";
+}
+
+<h2>Committee Chairman's Comments on Request</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemDescription, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.ItemDescription, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemCost, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.ItemCost, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemUsage, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.ItemUsage, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Justification, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Justification, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoOfStudentsImpacted, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.NoOfStudentsImpacted, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StudentClasses, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @{
+                    foreach (var aClass in Model.StudentClasses)
+                    {
+                        @aClass.Id@:  @aClass.Name <br />
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-3">Select Review:</label>
+            <div class="col-md-7">
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.CommitteeChairReview, "Recommended", new { htmlAttributes = new { @class = "form-control", id = "recommended" } })Recommended</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.CommitteeChairReview, "Not Recommended", new { htmlAttributes = new { @class = "form-control", id = "notrecommended" } })Not Recommended</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.CommitteeChairReview, "Need more information", new { htmlAttributes = new { @class = "form-control", id = "needinfo" } })Need More Information</label>
+                </div>
+                @Html.ValidationMessageFor(model => model.CommitteeChairReview, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="comment">
+            <label class="control-label col-md-3">Comment: </label>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.CommitteeChairComment, new { htmlAttributes = new { @class = "form-control", @Style = "height:100px; width:400px;" } })
+                @Html.ValidationMessageFor(model => model.CommitteeChairComment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-10">
+                <input type="submit" value="Submit Comment" class="btn btn-info" />
+            </div>
+        </div>
+    </div>
+                    }
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+
+
+
+

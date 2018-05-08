@@ -1,0 +1,77 @@
+﻿@model StudentsTechFeeEvalApp.ViewModels.RequestsInfoData
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of Departmental Requests</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            Item Description
+        </th>
+        <th>
+            Cost of Item
+        </th>
+        <th>
+            No of Students Impacted
+        </th>
+        <th>
+            Department
+        </th>
+        <th>
+            Submitted By
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Requests)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfStudentsImpacted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.Department.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.ApplicationUser.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.Status.StatusName)
+            </td>
+            <td>
+                @{
+                    if (User.IsInRole("DepartmentChair") || User.IsInRole("CommitteeMember") || User.IsInRole("CommitteeChairman") || User.IsInRole("Dean"))
+                    {
+                        if (ViewBag.CurrentPeriod == 2)
+                        {
+                            @Html.ActionLink("Edit ", "Edit", new { id = item.Id })<label> | </label>
+                            @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        }
+                        else if (ViewBag.CurrentPeriod == 3)
+                        {
+                            @Html.ActionLink("Edit ", "Edit", new { id = item.Id })<label> | </label>
+                            @Html.ActionLink("Review Request", "ReviewByDepartmentChair", new { id = item.Id })
+                        }
+                    }
+
+
+                }
+
+            </td>
+        </tr>
+                    }
+
+</table>
+

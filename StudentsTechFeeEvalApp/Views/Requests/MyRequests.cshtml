@@ -1,0 +1,68 @@
+﻿@model StudentsTechFeeEvalApp.ViewModels.RequestsInfoData
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of Requests</h2>
+
+<p>
+    @Html.ActionLink("Create New Request ", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Item Description
+        </th>
+        <th>
+            Cost of Item
+        </th>
+        <th>
+            Justification for Item
+        </th>
+        <th>
+            No of Students Impacted
+        </th>
+        <th>
+            Classes Supported
+        </th>
+        <th>
+           Current Status
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Requests)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Justification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfStudentsImpacted)
+            </td>
+            <td>
+                @foreach (var aClass in item.StudentClasses)
+                {
+                    @aClass.Id @: @aClass.Name <br />
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.StatusName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "MyRequests", null, new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+            </td>
+
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,77 @@
+﻿@model StudentsTechFeeEvalApp.ViewModels.RequestsInfoData
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of Requests</h2>
+
+<table class="table">
+    <tr>
+        <th>  
+            @{ var id = @ViewBag.RequestId; }          
+            <a href="~/Requests/Details/@id">@ViewBag.SelectRequest</a>
+        </th>
+        <th>
+            Yes
+        </th>
+        <th>
+            Yes, with Reservations
+        </th>
+        <th>
+            Need More Information
+        </th>
+        <th>
+            No
+        </th>
+        <th>
+            Comment
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.CommitteeMemberReviews)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.FullName)
+            </td>
+            <td>
+                @{
+                    if (item.Vote == "Yes")
+                    {
+                        <label>X</label>
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.Vote == "Yes, with Reservations")
+                    {
+                        <label class="col-lg-offset-3">X</label>
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.Vote == "Need more Information")
+                    {
+                        <label class="col-lg-offset-3">X</label>
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.Vote == "No")
+                    {
+                        <label>X</label>
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>           
+        </tr>
+                    }
+
+</table>

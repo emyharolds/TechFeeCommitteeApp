@@ -1,0 +1,8 @@
+﻿@model  StudentsTechFeeEvalApp.ViewModels.AssignedClassData
+
+<fieldset>
+    @Html.HiddenFor(model => model.ClassId)
+    @Html.CheckBoxFor(model => model.Assigned)
+    @Html.DisplayFor(model => model.ClassName)
+</fieldset>
+

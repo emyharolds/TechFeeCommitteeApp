@@ -1,0 +1,209 @@
+﻿@model StudentsTechFeeEvalApp.ViewModels.RequestsInfoData
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of Requests Under Review By the Committee</h2>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th colspan="6"><label class="text-danger"><b>All Requests</b></label></th>
+    </tr>
+    <tr>
+        <th>
+            Item Description
+        </th>
+        <th>
+            Cost of Item
+        </th>
+        <th>
+            Department
+        </th>
+        <th>
+            Dept Chair Comment
+        </th>
+        <th>
+            @{
+                if (ViewBag.CurrentPeriod == 4)
+                {
+                    <label><b>Priority</b></label>
+                }
+                else if ((ViewBag.CurrentPeriod == 5) || (ViewBag.CurrentPeriod == 6))
+                {
+                    <label><b>Review Status</b></label>
+                }
+                else
+                {
+                    <label><b>Priority</b></label>
+                }
+            }
+        </th>
+        <th>Action </th>
+    </tr>
+
+    @foreach (var item in Model.Requests)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.DepartmentChairComment)
+            </td>
+            <td>
+                @{
+                    if (ViewBag.CurrentPeriod == 4)
+                    {
+                        @Html.DisplayFor(modelitem => item.RankByDept)
+                    }
+                    else if (ViewBag.CurrentPeriod == 5)
+                    {
+                        if (User.IsInRole("CommitteeChairman"))
+                        {
+                            if (item.CommitteeChairReview == null)
+                            {
+                                <label class="text-danger">Pending</label>
+                            }
+                            else
+                            {
+                                <label class="text-success">Reviewed</label>
+                            }
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelitem => item.Status.StatusName)
+                        }
+                    }
+                    else if (ViewBag.CurrentPeriod == 6)
+                    {
+                        if (User.IsInRole("Dean"))
+                        {
+                            if (item.IsApprovedByDean == null)
+                            {
+                                <label class="text-danger">Pending</label>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelitem => item.Status.StatusName)
+                            }
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelitem => item.Status.StatusName)
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (User.IsInRole("CommitteeChairman"))
+                    {
+                        if (ViewBag.CurrentPeriod == 4)
+                        {
+                            @Html.ActionLink("View Votes ", "ViewReviews", new { id = item.Id })
+                        }
+                        else if (ViewBag.CurrentPeriod == 5)
+                        {
+                            @Html.ActionLink("View Votes ", "ViewReviews", new { id = item.Id })<label> | </label>
+                            @Html.ActionLink("Chairman's Comments ", "CommitteeChairReview", new { id = item.Id })
+                        }
+                    }
+                    else if (User.IsInRole("Dean"))
+                    {
+                        if (ViewBag.CurrentPeriod == 6)
+                        {
+                            @Html.ActionLink("Review Request ", "DeanReview", new { id = item.Id })
+                        }
+                    }
+                    else if (User.IsInRole("CommitteeMember"))
+                    {
+                        if (ViewBag.CurrentPeriod == 2)
+                        {
+                            @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        }
+                        else if (ViewBag.CurrentPeriod == 4)
+                        {
+                            @Html.ActionLink("Details ", "Details", new { id = item.Id })<label> | </label>
+                            @Html.ActionLink("Vote on Request", "CommitteeReview", new { id = item.Id })
+                        }
+                    }
+
+                }
+
+            </td>
+        </tr>
+                    }
+
+</table>
+
+@if (User.IsInRole("CommitteeMember"))
+{
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th colspan="6"><label class="text-success"><b>Requests I reviewed</b></label></th>
+        </tr>
+        <tr>
+            <th>
+                Item Description
+            </th>
+            <th>
+                Cost of Item
+            </th>
+            <th>
+                Department
+            </th>
+            <th>
+                Vote
+            </th>
+            <th>
+                Comment
+            </th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model.CommitteeMemberReviews)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Request.ItemDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Request.ItemCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Request.Department.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Comment)
+                </td>
+
+                <td>
+                    @{
+                        if (ViewBag.CurrentPeriod == 2)
+                        {
+                            @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        }
+                        else if (ViewBag.CurrentPeriod == 4)
+                        {
+                            @Html.ActionLink("Details ", "Details", new { id = item.Id })<label> | </label>
+                            @Html.ActionLink("Modify Vote", "EditReview", new { id = item.Id })
+                        }
+
+                    }
+
+                </td>
+            </tr>
+                        }
+
+    </table>
+                        }

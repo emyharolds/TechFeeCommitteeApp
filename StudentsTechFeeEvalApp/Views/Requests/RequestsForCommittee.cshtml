@@ -1,0 +1,86 @@
+﻿@model StudentsTechFeeEvalApp.ViewModels.RequestsInfoData
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of Requests</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Item Description
+        </th>
+        <th>
+            Cost of Item
+        </th>
+        <th>
+            Justification for Item
+        </th>
+        <th>
+            No of Students Impacted
+        </th>
+        <th>
+            Classes Supported
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Requests)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Justification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfStudentsImpacted)
+            </td>
+            <td>
+                @foreach (var aClass in item.StudentClasses)
+                {
+                    @aClass.Id @: @aClass.Name <br />
+                    }
+            </td>
+            <td>
+                @{
+                    if (ViewBag.CurrentPeriod == 2)
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })<span> | </span>
+                        @Html.ActionLink("Details |", "Details", new { id = item.Id })<span> | </span>
+                        @*@Html.ActionLink("Delete |", "Delete", new {id = item.Id })*@
+                    }
+
+                    if (User.IsInRole("DepartmentChair"))
+                    {
+                        @Html.ActionLink("Department Chair Review", "ReviewByDepartmentChair", new { id = item.Id })<span> | </span>
+                    }
+
+                    if (User.IsInRole("CommitteeMember"))
+                    {
+                        @Html.ActionLink("Committee Review", "CommitteeReview", new { id = item.Id })<span> | </span>
+                    }
+
+                    if (User.IsInRole("CommitteeChairman"))
+                    {
+                        @Html.ActionLink("View Reviews", "ViewReviews", new { id = item.Id })<span> | </span>
+                        @Html.ActionLink("CommitteeChair Review", "CommitteeChairReview", new { id = item.Id })
+                    }
+
+                    if (User.IsInRole("Dean"))
+                    {
+                        @Html.ActionLink("Dean Review", "DeanReview", new { id = item.Id })
+                    }
+                }
+
+            </td>
+        </tr>
+                    }
+
+</table>
+

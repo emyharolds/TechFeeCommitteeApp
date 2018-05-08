@@ -1,0 +1,123 @@
+﻿@model StudentsTechFeeEvalApp.Models.Model_Classes.Request
+@{
+    ViewBag.Title = "Review Request";
+}
+
+<h2>Department Chair Request Review</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemDescription, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.ItemDescription, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemCost, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.ItemCost, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemUsage, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.ItemUsage, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Justification, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Justification, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoOfStudentsImpacted, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.NoOfStudentsImpacted, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-3">Classes Supported: </label>
+            <div class="col-md-9">
+                @{
+                    foreach (var aClass in Model.StudentClasses)
+                    {
+                        @aClass.Id@:  @aClass.Name <br />
+                    }
+                }
+                @Html.ValidationMessageFor(model => model.StudentClasses, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-3">Approve/Deny Request:</label>
+            <div class="col-md-7">
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.IsApprovedByDepartmentChair, false, new { htmlAttributes = new { @class = "form-control", id = "rejected" } })Reject</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.IsApprovedByDepartmentChair, true, new { htmlAttributes = new { @class = "form-control", id = "approved"} })Approve</label>
+                </div>
+                @Html.ValidationMessageFor(model => model.IsApprovedByDepartmentChair, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="comment">
+            <label class="control-label col-md-3">Comment: </label>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.DepartmentChairComment, new { htmlAttributes = new { @class = "form-control", @Style = "height:100px; width:400px;" } })
+                @Html.ValidationMessageFor(model => model.DepartmentChairComment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="rank">
+            <label class="control-label col-md-3">Rank Request: </label>
+            <div class="col-md-7">
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.RankByDept, "Low Priority", new { htmlAttributes = new { @class = "form-control" } })Low Priority</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.RankByDept, "Normal Priority", new { htmlAttributes = new { @class = "form-control" } })Normal Priority</label>
+                </div>
+                <div class="radio">
+                    <label>@Html.RadioButtonFor(model => model.RankByDept, "High Priority", new { htmlAttributes = new { @class = "form-control" } }) High Priority</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-10">
+                <input type="submit" value="Submit Review" class="btn btn-info" />
+            </div>
+        </div>
+    </div>
+  }                  
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/myscripts")
+}
+
+
+
+
+
+
+
+
+

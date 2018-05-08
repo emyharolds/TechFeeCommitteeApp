@@ -1,0 +1,127 @@
+﻿@model StudentsTechFeeEvalApp.Models.Model_Classes.CommitteeMemberReview
+@{
+    ViewBag.Title = "Committee Review Request";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @*@Html.HiddenFor(model => model.RequestId, new { Value = @ViewBag.SelectedRequest.Id })*@
+
+
+    <dl class="dl-horizontal">
+        <dt>
+            Description of Item
+        </dt>
+
+        <dd>
+            @Model.Request.ItemDescription
+        </dd>
+
+        <dt>
+            Item Usage:
+        </dt>
+
+        <dd>
+            @Model.Request.ItemUsage
+        </dd>
+
+        <dt>
+            Cost of Item (with Shipping):
+        </dt>
+
+        <dd>
+            @Model.Request.ItemCost
+        </dd>
+
+        <dt>
+            Justification for Item:
+        </dt>
+
+        <dd>
+            @Model.Request.Justification
+        </dd>
+
+        <dt>
+            Number of Students Impacted:
+        </dt>
+
+        <dd>
+            @Model.Request.NoOfStudentsImpacted
+        </dd>
+
+        <dt>
+            Classes Supported:
+        </dt>
+
+        <dd>
+            @{ foreach (var item in @Model.Request.StudentClasses)
+                {
+                    @item.Name <br />
+                }}
+        </dd>
+
+        <dt>
+            Submitted By:
+        </dt>
+
+        <dd>
+            @Model.Request.ApplicationUser.FullName
+        </dd>
+
+        <dt>
+            Department
+        </dt>
+
+        <dd>
+           @Model.Request.Department.Name
+        </dd>
+
+    </dl>
+
+    <div class="form-group">
+        <label class="control-label col-md-3">Select an option to vote::</label>
+        <div class="col-md-7">
+            @Html.RadioButtonFor(model => model.Vote, "Yes", new { htmlAttributes = new { @class = "form-control", id = "yes" } })<label>Yes</label>
+            @Html.RadioButtonFor(model => model.Vote, "Yes, with Reservations", new { htmlAttributes = new { @class = "form-control", id = "yeswithr" } }) <label> Yes, with Reservations </label>
+            @Html.RadioButtonFor(model => model.Vote, "Need more Information", new { htmlAttributes = new { @class = "form-control", id = "needmoreinfo" } }) <label> Need more Information </label>
+            @Html.RadioButtonFor(model => model.Vote, "No", new { htmlAttributes = new { @class = "form-control", id = "no" } })<label> No </label>
+
+
+            @Html.ValidationMessageFor(model => model.Vote, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="comment">
+        @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-7">
+            @Html.TextAreaFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-10">
+                    <input type="submit" value="Submit Vote" class="btn btn-default" />
+                </div>
+            </div>
+                }
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+
+
+
+

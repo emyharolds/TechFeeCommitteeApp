@@ -1,0 +1,67 @@
+﻿@model StudentsTechFeeEvalApp.Models.ApplicationUser
+@{
+    ViewBag.Title = "Manage My Account";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>My Account Settings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Full Name:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            700#:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            Application Role:
+        </dt>
+
+        <dd>
+            @ViewBag.Role
+        </dd>
+
+        <dt>
+            Department:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department.Name)
+        </dd>
+
+        <dt>
+            Initial Password:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InitialPassword)
+        </dd>
+
+        <dt>
+            Email Address:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>Password:</dt>
+        <dd>
+            @Html.ActionLink("Change your password", "ChangePassword")
+        </dd>
+        
+    </dl>
+</div>

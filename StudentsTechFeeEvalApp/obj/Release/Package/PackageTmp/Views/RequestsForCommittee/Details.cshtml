@@ -1,0 +1,98 @@
+﻿@model StudentsTechFeeEvalApp.Models.Model_Classes.Request
+
+@{
+    ViewBag.Title = "Request Details";
+}
+
+<h2>Request Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Description of Item
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemDescription)
+        </dd>
+
+        <dt>
+            Item Usage:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemUsage)
+        </dd>
+
+        <dt>
+            Cost of Item (with Shipping):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemCost)
+        </dd>
+
+        <dt>
+            Justification for Item:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Justification)
+        </dd>
+
+        <dt>
+            Number of Students Impacted:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoOfStudentsImpacted)
+        </dd>
+
+        <dt>
+            Classes Supported: 
+        </dt>
+
+        <dd>
+            @{ foreach (var item in Model.StudentClasses)
+                {
+                    @item.Name <br/>
+                }}
+        </dd>
+
+        <dt>
+            Submitted By:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.FullName)
+        </dd>
+
+        <dt>
+            Department
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department.Name)
+        </dd>
+
+        <dt>
+            Date of Submission
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfSubmission)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (ViewBag.CurrentPeriod == 2)
+    {
+        @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) <label> | </label>*@
+        @Html.ActionLink("Back to List", "Index")
+    }
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>
+

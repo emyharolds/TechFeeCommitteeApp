@@ -1,0 +1,112 @@
+﻿@model StudentsTechFeeEvalApp.Models.Model_Classes.CommitteeMemberReview
+@{
+    ViewBag.Title = "Committee Review Request";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>New Committee Member Review on Request</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Request.ItemDescription, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Request.ItemDescription, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Request.ItemCost, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Request.ItemCost, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Request.ItemCost, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Request.ItemUsage, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Request.ItemUsage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Request.ItemUsage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Request.Justification, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Request.Justification, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Request.Justification, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Request.NoOfStudentsImpacted, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Request.NoOfStudentsImpacted, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Request.NoOfStudentsImpacted, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Request.StudentClasses, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @{
+                    foreach (var aClass in Model.Request.StudentClasses)
+                    {
+                        @aClass.Id@:  @aClass.Name <br />
+                    }
+                }
+                @Html.ValidationMessageFor(model => model.Request.StudentClasses, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-3">Select an option to vote::</label>
+            <div class="col-md-7">
+                @Html.RadioButtonFor(model => model.Vote, "Yes", new { htmlAttributes = new { @class = "form-control", id = "approved" } })<label>Yes</label>
+                @Html.RadioButtonFor(model => model.Vote, "Yes, with Reservations", new { htmlAttributes = new { @class = "form-control", id = "rejected" } }) <label> Yes, with Reservations </label>
+                @Html.RadioButtonFor(model => model.Vote, "Need more Information", new { htmlAttributes = new { @class = "form-control", id = "approved" } }) <label> Need more Information </label>
+                @Html.RadioButtonFor(model => model.Vote, "No", new { htmlAttributes = new { @class = "form-control", id = "rejected" } })<label> No </label>
+
+
+                @Html.ValidationMessageFor(model => model.Vote, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="comment">
+            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+                    }
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+
+
+
+

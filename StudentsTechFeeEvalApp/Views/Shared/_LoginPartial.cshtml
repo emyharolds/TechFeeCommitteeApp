@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNet.Identity
+@using StudentsTechFeeEvalApp.Extensions
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+
+            @*@Html.Partial("_IsPasswordChanged")*@
+
+            @{
+                if (User.IsInRole("Faculty"))
+                {
+                    <li>@Html.ActionLink("My Requests", "Index", "MyRequests", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                }
+                else if (User.IsInRole("DepartmentChair"))
+                {
+                    <li>@Html.ActionLink("My Requests", "Index", "MyRequests", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                    <li>@Html.ActionLink("Department Requests", "Index", "Requests", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+
+                }
+                else if (User.IsInRole("CommitteeMember"))
+                {
+                    <li>@Html.ActionLink("My Requests", "Index", "MyRequests", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                    <li>@Html.ActionLink("Department Requests", "Index", "Requests", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                    <li>@Html.ActionLink("Committee Requests", "Index", "RequestsForCommittee", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                }
+                else if (User.IsInRole("CommitteeChairman"))
+                {
+                    <li>@Html.ActionLink("My Requests", "Index", "MyRequests", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                    <li>@Html.ActionLink("Department Requests", "Index", "Requests", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                    <li>@Html.ActionLink("Committee Requests", "Index", "RequestsForCommittee", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                    <li>@Html.ActionLink("Periods", "Index", "Periods", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                    <li>@Html.ActionLink("Members Accounts", "Index", "CommitteeMembers", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                }
+                else if (User.IsInRole("Dean"))
+                {
+                    <li>@Html.ActionLink("My Requests", "Index", "MyRequests", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                    <li>@Html.ActionLink("Department Requests", "Index", "Requests", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                    <li>@Html.ActionLink("Committee Requests", "Index", "RequestsForCommittee", routeValues: null, htmlAttributes: new { title = "My Requests" })  </li>
+                }
+            }
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetFullName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+                    }
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    </ul>
+                }

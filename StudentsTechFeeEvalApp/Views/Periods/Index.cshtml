@@ -1,0 +1,44 @@
+﻿@model StudentsTechFeeEvalApp.Models.Model_Classes.Period
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Manage Application Periods</h2>
+
+<h4>Current Active Period: <span class="badge badge-danger">@ViewBag.ActivePeriod.Name</span></h4>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <p><label>Available Periods</label></p>
+            <div class="col-md-7">
+                @Html.RadioButtonFor(model => model.Id, 1, new { htmlAttributes = new { @class = "form-control", id = "yes" } }) <label> Setup</label><br/>
+                @Html.RadioButtonFor(model => model.Id, 2, new { htmlAttributes = new { @class = "form-control", id = "yeswithr" } }) <label> Submission</label><br />
+                @Html.RadioButtonFor(model => model.Id, 3, new { htmlAttributes = new { @class = "form-control", id = "needmoreinfo" } }) <label> Departmental Review </label><br />
+                @Html.RadioButtonFor(model => model.Id, 4, new { htmlAttributes = new { @class = "form-control", id = "no" } }) <label> Committee Review </label><br />
+                @Html.RadioButtonFor(model => model.Id, 5, new { htmlAttributes = new { @class = "form-control", id = "needmoreinfo" } }) <label> Committee Chairman Comments </label><br />
+                @Html.RadioButtonFor(model => model.Id, 6, new { htmlAttributes = new { @class = "form-control", id = "no" } }) <label> Dean's Review</label><br />
+
+                @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-10">
+                <input type="submit" value="Activate Period" class="btn btn-info" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
